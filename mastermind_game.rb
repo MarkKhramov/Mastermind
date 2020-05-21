@@ -11,7 +11,7 @@ def provide_clue(computer, play)
     # same as the element in the computer array at that index.
     # Adds the index to checked_spot and adds " red " if so.
     if play[idx] == color 
-      clue += " red "
+      clue += "red "
       checked_spots.push(idx)
     # Checks if the color at idx in computer is found else where
     # in the player array. If so, it checks if that element was
@@ -20,7 +20,7 @@ def provide_clue(computer, play)
       play.each.with_index do |c, idx|  
         if c == color && checked_spots.include?(idx) == false
           checked_spots.push(idx)
-          clue += " white "
+          clue += "white "
         end
       end
 
@@ -28,9 +28,23 @@ def provide_clue(computer, play)
     end
   end
  
-  return clue
+  return randomize_clue(clue) 
 end
 
+private 
+def randomize_clue(clues)
+  clues = clues.split(" ").to_a
+
+  clues.length.times do 
+    idx1 = rand(0..clues.length - 1)
+    idx2 = rand(0..clues.length - 1) 
+    temp = clues[idx1]
+    clues[idx1] = clues[idx2]
+    clues[idx2] = clues[idx1]
+  end 
+  
+  return clues.to_s
+end
 while(true)
   puts computer.to_s
   print "please enter a guess: "
