@@ -1,6 +1,27 @@
 require 'pry'
+require 'colorize'
 computer =[1,6,1,3] 
   #[rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
+
+def provide_color_ball(colorString)
+  colorString = colorString.split('').to_a  
+  
+  return colorString.map do |color|
+    case color.downcase
+    when "r"
+      "  ".red
+    when "y"
+      "  ".yellow
+    when "b" 
+      "  ".blue
+    when "w"
+      "  ".white  
+    when "o"
+      "  ".orange
+    when "g"
+      "  ".green
+  end
+end
 
 def provide_clue(computer, play)
   clue = ""
@@ -46,6 +67,7 @@ def randomize_clue(clues)
   return clues.to_s
 end
 while(true)
+  
   puts computer.to_s
   print "please enter a guess: "
   play = gets.chomp
