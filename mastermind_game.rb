@@ -2,7 +2,6 @@ require 'pry'
 require 'colorize'
 computer =[1,6,1,3] 
   #[rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
-
 def provide_color_ball(colorString)
   colorString = colorString.split('').to_a  
   
@@ -66,6 +65,15 @@ def randomize_clue(clues)
   
   return clues.to_s
 end
+
+def colors_valid?(color_string)
+  color_string = color_string.split('').to_a
+  valid_colors = ["r", "y", "b", "w", "o", "g"] 
+
+  return color_string.all? {|color| valid_colors.include?(color}
+end
+
+
 while(true)
   
   puts computer.to_s
