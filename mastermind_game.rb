@@ -51,6 +51,12 @@ def provide_clue(computer, play)
   return randomize_clue(clue) 
 end
 
+def computer_color
+  
+  valid_colors = ["r", "y", "b", "w", "o", "g"] 
+
+  return [valid_colors[rand[1..6]], valid_colors[rand[1..6]], valid_colors[rand[1..6]], valid_colors[rand[1..6]]]
+end
 private 
 def randomize_clue(clues)
   clues = clues.split(" ").to_a
@@ -70,7 +76,7 @@ def colors_valid?(color_string)
   color_string = color_string.split('').to_a
   valid_colors = ["r", "y", "b", "w", "o", "g"] 
 
-  return color_string.all? {|color| valid_colors.include?(color}
+  return color_string.all? {|color| valid_colors.include?(color)}
 end
 
 
