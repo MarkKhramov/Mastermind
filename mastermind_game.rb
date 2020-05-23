@@ -57,6 +57,7 @@ def computer_color
 
   return [valid_colors[rand[1..6]], valid_colors[rand[1..6]], valid_colors[rand[1..6]], valid_colors[rand[1..6]]]
 end
+
 private 
 def randomize_clue(clues)
   clues = clues.split(" ").to_a
