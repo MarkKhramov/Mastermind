@@ -1,4 +1,4 @@
-require 'pry'
+require_relative 'menu'
 require 'colorize'
 computer =[1,6,1,3] 
   #[rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
@@ -19,6 +19,7 @@ def provide_color_ball(colorString)
       "  ".orange
     when "g"
       "  ".green
+    end
   end
 end
 
@@ -82,9 +83,11 @@ end
 
 
 while(true)
+  m = Menu.new()
+  m.main_menu()
   
   puts computer.to_s
-  print "please enter a guess: "
+  puts "Please enter a guess: "
   play = gets.chomp
   play = play.split("").to_a
   play = play.map { |x| x.to_i }
