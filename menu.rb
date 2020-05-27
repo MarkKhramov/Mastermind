@@ -14,11 +14,8 @@ class Menu
     
     unless valid_command do
       input = gets
-      
       if gets == "P"
-        
-        gets 
-        
+        return print_choices 
       elsif gets == "I"
         print_instructions
       end
