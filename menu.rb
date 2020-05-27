@@ -17,6 +17,8 @@ class Menu
       
       if gets == "P"
         
+        gets 
+        
       elsif gets == "I"
         print_instructions
       end
@@ -44,5 +46,16 @@ class Menu
     puts "(7) The Codebreaker has 12 chances to deduce the code"
     puts "\nPress enter to continue"
     gets
+  end
+
+  def print_choice
+    `clear`
+    puts "Play as (1)Codebreaker or (2)Codemaker?"
+    input = gets
+    
+    if input == "1" || input == "2"
+      input == 1 ? "Codebreaker" : "Codemaker"
+    else 
+      return print_choices 
   end
 end
