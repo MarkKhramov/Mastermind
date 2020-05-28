@@ -16,7 +16,6 @@ class Menu
     puts "\n\n"
     puts "(P)lay Game               (I)nstructions".strip.center(150) 
     
-     
     input = gets.chomp
     if input== 'P'
       return print_choices 

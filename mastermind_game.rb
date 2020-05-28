@@ -1,33 +1,45 @@
 require_relative 'menu'
 require 'pry'
 require 'colorize'
-computer =[1,6,1,3] 
-  #[rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
+
+@board = []
 def provide_color_ball(colorString)
   colorString = colorString.split('').to_a  
   
-   colorString.each do |color|
+  return colorString.map do |color|
     case color.downcase
     when "r"
-       print "r".red + " "
+       "  ".on_red + " "
     when "y"
-       print "y".yellow + " "
+       "  ".on_yellow + " "
     when "b" 
-       print "b".blue + " "
+       "  ".on_blue + " "
     when "w"
-       print "w".white + " "  
-    when "o"
-       print "c".cyan + " "
+       "  ".on_white + " "  
+    when "c"
+       "  ".on_cyan + " "
     when "g"
-       print "g".green+ " "
+       "  ".on_green+ " "
     end
   end
 end
 
+def provide_pegs(clues)
+  return clues.map do |clue|
+    case clues
+    when "white"
+      "o".white
+    when "red"
+      "o".red
+    end
+  end 
+end
 def provide_clue(computer, play)
   clue = ""
   checked_spots = []
 
+      p play
+  p computer
   computer.each.with_index do |color, idx|
     # Checks the player array at index to find out if it is the
     # same as the element in the computer array at that index.
@@ -45,11 +57,9 @@ def provide_clue(computer, play)
           clue += "white "
         end
       end
-      puts play
       puts "checked_spots " + checked_spots.to_s
     end
   end
-  binding.pry 
   return randomize_clue(clue) 
 end
 
@@ -80,20 +90,15 @@ def colors_valid?(color_string)
   return color_string.all? {|color| valid_colors.include?(color)}
 end
 
-
+def print_screen(new_line = [nil])
   puts `clear`
-while(true)
- ## m = Menu.new()
-  ##m.main_menu()
-  computer = computer_color.to_a 
-  puts "Please enter a guess: "
-  play = gets.chomp
-  play = play.split("").to_a
-  play = play.map { |x| x.to_i }
-  if play == computer
-    puts "correct"
-  else
-    puts "wrong"
-    puts provide_clue(computer,play)
-  end
+  @board.each { |line| puts line.join(" ").center(150) } 
+end
+
+def play_as_codebreaker()
+ valid_input = false
+  
+  if !valid_input
+   puts "Enter an input"
+   
 end
