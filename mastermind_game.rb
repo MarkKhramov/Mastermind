@@ -1,24 +1,25 @@
 require_relative 'menu'
+require 'pry'
 require 'colorize'
 computer =[1,6,1,3] 
   #[rand(1..6), rand(1..6), rand(1..6), rand(1..6)]
 def provide_color_ball(colorString)
   colorString = colorString.split('').to_a  
   
-  return colorString.map do |color|
+   colorString.each do |color|
     case color.downcase
     when "r"
-      "  ".red
+       print "r".red + " "
     when "y"
-      "  ".yellow
+       print "y".yellow + " "
     when "b" 
-      "  ".blue
+       print "b".blue + " "
     when "w"
-      "  ".white  
+       print "w".white + " "  
     when "o"
-      "  ".orange
+       print "c".cyan + " "
     when "g"
-      "  ".green
+       print "g".green+ " "
     end
   end
 end
@@ -44,19 +45,17 @@ def provide_clue(computer, play)
           clue += "white "
         end
       end
-
+      puts play
       puts "checked_spots " + checked_spots.to_s
     end
   end
- 
+  binding.pry 
   return randomize_clue(clue) 
 end
 
 def computer_color
-  
-  valid_colors = ["r", "y", "b", "w", "o", "g"] 
-
-  return [valid_colors[rand[1..6]], valid_colors[rand[1..6]], valid_colors[rand[1..6]], valid_colors[rand[1..6]]]
+  valid_colors = ["r", "y", "b", "w", "c", "g"] 
+  return [valid_colors[rand(0..5)],valid_colors[rand(0..5)], valid_colors[rand(0..5)], valid_colors[rand(0..5)]]
 end
 
 private 
@@ -76,17 +75,17 @@ end
 
 def colors_valid?(color_string)
   color_string = color_string.split('').to_a
-  valid_colors = ["r", "y", "b", "w", "o", "g"] 
+  valid_colors = ["r", "y", "b", "w", "c", "g"] 
 
   return color_string.all? {|color| valid_colors.include?(color)}
 end
 
 
+  puts `clear`
 while(true)
-  m = Menu.new()
-  m.main_menu()
-  
-  puts computer.to_s
+ ## m = Menu.new()
+  ##m.main_menu()
+  computer = computer_color.to_a 
   puts "Please enter a guess: "
   play = gets.chomp
   play = play.split("").to_a

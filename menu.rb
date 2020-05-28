@@ -1,4 +1,3 @@
-require 'pry'
 class Menu
 
   def initialize()
