@@ -6,6 +6,7 @@ require 'colorize'
 def provide_color_ball(colorString)
   colorString = colorString.split('').to_a  
   
+  binding.pry
   return colorString.map do |color|
     case color.downcase
     when "r"
@@ -26,7 +27,7 @@ end
 
 def provide_pegs(clues)
   return clues.map do |clue|
-    case clues
+    case clue
     when "white"
       "o".white
     when "red"
@@ -34,12 +35,12 @@ def provide_pegs(clues)
     end
   end 
 end
+
 def provide_clue(computer, play)
   clue = ""
   checked_spots = []
-
-      p play
-  p computer
+  
+  play = play.chomp.split('').to_a
   computer.each.with_index do |color, idx|
     # Checks the player array at index to find out if it is the
     # same as the element in the computer array at that index.
@@ -57,7 +58,6 @@ def provide_clue(computer, play)
           clue += "white "
         end
       end
-      puts "checked_spots " + checked_spots.to_s
     end
   end
   return randomize_clue(clue) 
@@ -68,10 +68,9 @@ def computer_color
   return [valid_colors[rand(0..5)],valid_colors[rand(0..5)], valid_colors[rand(0..5)], valid_colors[rand(0..5)]]
 end
 
-private 
 def randomize_clue(clues)
-  clues = clues.split(" ").to_a
-
+  clues = clues.chomp.split(" ").to_a
+ 
   clues.length.times do 
     idx1 = rand(0..clues.length - 1)
     idx2 = rand(0..clues.length - 1) 
@@ -80,25 +79,45 @@ def randomize_clue(clues)
     clues[idx2] = clues[idx1]
   end 
   
-  return clues.to_s
+  return clues
 end
 
 def colors_valid?(color_string)
-  color_string = color_string.split('').to_a
+  color_string = color_string.chomp.split('').to_a
   valid_colors = ["r", "y", "b", "w", "c", "g"] 
 
   return color_string.all? {|color| valid_colors.include?(color)}
 end
 
-def print_screen(new_line = [nil])
+def print_screen(new_balls = nil, new_pegs = nil)
   puts `clear`
-  @board.each { |line| puts line.join(" ").center(150) } 
+  
+  if new_balls != nil
+    @board.push(provide_color_ball(new_balls) + provide_pegs(new_pegs))
+  end
+  @board.each do |line| 
+    puts line.join(" ")
+    puts " "  
+  end
+  
 end
 
-def play_as_codebreaker()
- valid_input = false
+def play_as_codebreaker
+  puts `clear`
+  guesses = 0
+  computer = computer_color
   
-  if !valid_input
-   puts "Enter an input"
+  while guesses < 12 
+    print "Please enter an input: "
+    input = gets
+    if colors_valid?(input) && input.chomp.length == 4
+      guesses += 1
+      print_screen(input,provide_clue(computer, input)) 
+    else
+      puts "Invalid input! Please try again"
+    end
+  end
    
 end
+
+play_as_codebreaker()
