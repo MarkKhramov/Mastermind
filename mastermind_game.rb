@@ -2,11 +2,9 @@ require_relative 'menu'
 require 'pry'
 require 'colorize'
 
-@board = []
 def provide_color_ball(colorString)
   colorString = colorString.split('').to_a  
   
-  binding.pry
   return colorString.map do |color|
     case color.downcase
     when "r"
@@ -34,11 +32,13 @@ def provide_pegs(clues)
       "o".red
     end
   end 
+   
 end
 
 def provide_clue(computer, play)
   clue = ""
   checked_spots = []
+  computer = computer.chomp.split('').to_a
   
   play = play.chomp.split('').to_a
   computer.each.with_index do |color, idx|
@@ -56,6 +56,7 @@ def provide_clue(computer, play)
         if c == color && checked_spots.include?(idx) == false
           checked_spots.push(idx)
           clue += "white "
+          break
         end
       end
     end
@@ -105,19 +106,34 @@ end
 def play_as_codebreaker
   puts `clear`
   guesses = 0
-  computer = computer_color
-  
+  computer = computer_color.join("") 
+  input = nil
+
   while guesses < 12 
     print "Please enter an input: "
     input = gets
+
     if colors_valid?(input) && input.chomp.length == 4
       guesses += 1
       print_screen(input,provide_clue(computer, input)) 
     else
       puts "Invalid input! Please try again"
     end
+    puts computer
+    
+    if computer == input.chomp.split.to_a
+     break
+    end 
   end
    
+  if computer == input.chomp.split.to_a
+    puts "You Win, congrats!"
+  else
+    puts "You lose!"
+  end
 end
 
-play_as_codebreaker()
+def play_as_codemaker
+  puts `clear`
+
+end
