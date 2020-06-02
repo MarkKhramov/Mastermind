@@ -2,6 +2,8 @@ require_relative 'menu'
 require 'pry'
 require 'colorize'
 
+@board = []
+
 def provide_color_ball(colorString)
   colorString = colorString.split('').to_a  
   
@@ -32,30 +34,31 @@ def provide_pegs(clues)
       "o".red
     end
   end 
-   
 end
 
-def provide_clue(computer, play)
+def provide_clue(codemaker, play)
   clue = ""
   checked_spots = []
-  computer = computer.chomp.split('').to_a
+  codemaker = codemaker.chomp.split('').to_a
   
   play = play.chomp.split('').to_a
-  computer.each.with_index do |color, idx|
+  codemaker.each.with_index do |color, idx|
     # Checks the player array at index to find out if it is the
-    # same as the element in the computer array at that index.
+    # same as the element in the codemaker array at that index.
     # Adds the index to checked_spot and adds " red " if so.
     if play[idx] == color 
       clue += "red "
       checked_spots.push(idx)
-    # Checks if the color at idx in computer is found else where
+    # Checks if the color at idx in codemaker is found else where
     # in the player array. If so, it checks if that element was
     # already counted. If not, adds " white " and counts that index 
     elsif play.include?(color)
       play.each.with_index do |c, idx|  
-        if c == color && checked_spots.include?(idx) == false
+        if c == color && checked_spots.include?(idx) == false && codemaker[idx] != c
           checked_spots.push(idx)
           clue += "white "
+
+          binding.pry
           break
         end
       end
@@ -64,6 +67,7 @@ def provide_clue(computer, play)
   return randomize_clue(clue) 
 end
 
+#returns random colors for the computer when it is the codemaker (or codebreaker if lazy)
 def computer_color
   valid_colors = ["r", "y", "b", "w", "c", "g"] 
   return [valid_colors[rand(0..5)],valid_colors[rand(0..5)], valid_colors[rand(0..5)], valid_colors[rand(0..5)]]
@@ -119,21 +123,32 @@ def play_as_codebreaker
     else
       puts "Invalid input! Please try again"
     end
-    puts computer
     
-    if computer == input.chomp.split.to_a
-     break
-    end 
+   break if computer == input.chomp.split.to_a
   end
    
-  if computer == input.chomp.split.to_a
-    puts "You Win, congrats!"
-  else
-    puts "You lose!"
-  end
+  puts computer == input.chomp ? "You Win!" : "You Lose!"
 end
 
 def play_as_codemaker
   puts `clear`
+  user_colors = ""
 
+  loop do
+    print "Please enter a sequence of colors: "
+    user_colors = gets
+    break if colors_valid?(user_colors)
+    puts "Invalid Input! Please enter a valid input"
+  end
+  
+  guesses = 0 
+  while guesses < 12
+    puts "Thinking"
+    sleep(2)
+    computer = computer_color.join("")
+    print_screen(computer, provide_clue(user_colors, computer)) 
+    guesses+=1
+  end
 end
+
+play_as_codemaker
