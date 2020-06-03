@@ -1,9 +1,58 @@
 require_relative 'menu'
-require 'pry'
 require 'colorize'
 
 @board = []
 
+public
+def initialize
+	
+end
+
+def play_as_codebreaker
+  puts `clear`
+  guesses = 0
+  computer = computer_color.join("") 
+  input = nil
+
+  while guesses < 12 
+    print "Please enter an input: "
+    input = gets
+
+    if colors_valid?(input) && input.chomp.length == 4
+      guesses += 1
+      print_screen(input,provide_clue(computer, input)) 
+    else
+      puts "Invalid input! Please try again"
+    end
+    
+   break if computer == input.chomp.split.to_a
+  end
+   
+  puts computer == input.chomp ? "You Win!" : "You Lose!"
+end
+
+def play_as_codemaker
+  puts `clear`
+  user_colors = ""
+
+  loop do
+    print "Please enter a sequence of colors: "
+    user_colors = gets
+    break if colors_valid?(user_colors)
+    puts "Invalid Input! Please enter a valid input"
+  end
+  
+  guesses = 0 
+  while guesses < 12
+    puts "Thinking"
+    sleep(2)
+    computer = computer_color.join("")
+    print_screen(computer, provide_clue(user_colors, computer)) 
+    guesses+=1
+  end
+end
+
+private
 def provide_color_ball(colorString)
   colorString = colorString.split('').to_a  
   
@@ -104,48 +153,4 @@ def print_screen(new_balls = nil, new_pegs = nil)
   
 end
 
-def play_as_codebreaker
-  puts `clear`
-  guesses = 0
-  computer = computer_color.join("") 
-  input = nil
 
-  while guesses < 12 
-    print "Please enter an input: "
-    input = gets
-
-    if colors_valid?(input) && input.chomp.length == 4
-      guesses += 1
-      print_screen(input,provide_clue(computer, input)) 
-    else
-      puts "Invalid input! Please try again"
-    end
-    
-   break if computer == input.chomp.split.to_a
-  end
-   
-  puts computer == input.chomp ? "You Win!" : "You Lose!"
-end
-
-def play_as_codemaker
-  puts `clear`
-  user_colors = ""
-
-  loop do
-    print "Please enter a sequence of colors: "
-    user_colors = gets
-    break if colors_valid?(user_colors)
-    puts "Invalid Input! Please enter a valid input"
-  end
-  
-  guesses = 0 
-  while guesses < 12
-    puts "Thinking"
-    sleep(2)
-    computer = computer_color.join("")
-    print_screen(computer, provide_clue(user_colors, computer)) 
-    guesses+=1
-  end
-end
-
-play_as_codemaker
