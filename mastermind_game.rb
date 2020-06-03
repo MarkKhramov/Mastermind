@@ -40,7 +40,6 @@ def provide_clue(codemaker, play)
   clue = ""
   checked_spots = []
   codemaker = codemaker.chomp.split('').to_a
-  
   play = play.chomp.split('').to_a
   codemaker.each.with_index do |color, idx|
     # Checks the player array at index to find out if it is the
@@ -57,8 +56,6 @@ def provide_clue(codemaker, play)
         if c == color && checked_spots.include?(idx) == false && codemaker[idx] != c
           checked_spots.push(idx)
           clue += "white "
-
-          binding.pry
           break
         end
       end
@@ -81,7 +78,7 @@ def randomize_clue(clues)
     idx2 = rand(0..clues.length - 1) 
     temp = clues[idx1]
     clues[idx1] = clues[idx2]
-    clues[idx2] = clues[idx1]
+    clues[idx2] = temp 
   end 
   
   return clues
