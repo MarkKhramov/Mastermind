@@ -53,10 +53,10 @@ class Menu
   def print_choices
     puts `clear`
     puts "Play as (1)Codebreaker or (2)Codemaker?"
-    input = gets
+    input = gets.chomp
     
     if input == "1" || input == "2"
-      input == 1 ? "Codebreaker" : "Codemaker"
+      input =="1" ? "Codebreaker" : "Codemaker"
     else 
       return print_choices 
     end
