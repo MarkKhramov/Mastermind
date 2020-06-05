@@ -17,9 +17,9 @@ class Menu
     puts "(P)lay Game               (I)nstructions".strip.center(150) 
     
     input = gets.chomp
-    if input== 'P'
+    if input.upcase== 'P'
       return print_choices 
-    elsif input == 'I'
+    elsif input.upcase == 'I'
       print_instructions()
     end
   

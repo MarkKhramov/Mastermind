@@ -28,24 +28,19 @@ class MastermindGame
 	      puts "Invalid input! Please try again"
 	    end
 	    
-	   break if computer == input.chomp.split.to_a
+	   break if computer == input.chomp.split('').to_a
 	  end
 	   
-	  puts computer == input.chomp ? "You Win!" : "You Lose!"
+	  puts computer == input.chomp.split('').to_a ? "You Win!" : "You Lose!"
 	end
 
-	def print_available_colors
-          valid_colors = ["r", "y", "b", "w", "c", "g"]
-	  
-	  puts "Valid Colors: " + "r ".black.on_red  + "y ".black.on_yellow  + "b ".black.on_blue + "w ".black.on_white  + "c ".black.on_cyan  + "g ".black.on_green  
-	  
-	end
-
+	
 	def play_as_codemaker
 	  puts `clear`
 	  user_colors = ""
 
 	  loop do
+	    print_available_colors
 	    print "Please enter a sequence of colors: "
 	    user_colors = gets
 	    break if colors_valid?(user_colors)
@@ -59,7 +54,10 @@ class MastermindGame
 	    computer = computer_color.join("")
 	    print_screen(computer, provide_clue(user_colors, computer)) 
 	    guesses+=1
+	    break if computer == user_colors.chomp.split('').to_a
 	  end
+
+	  puts computer == user_colors.chomp.split('').to_a ? "You Lose!" : "You Win!"
 	end
 
 	private
@@ -161,4 +159,9 @@ class MastermindGame
 	  end
 	  
 	end
+
+	def print_available_colors
+          puts "Valid Colors: " + "r ".black.on_red  + "y ".black.on_yellow  + "b ".black.on_blue + "w ".black.on_white  + "c ".black.on_cyan  + "g ".black.on_green  
+        end
+
 end
